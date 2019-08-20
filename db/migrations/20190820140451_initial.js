@@ -30,3 +30,4 @@ exports.down = function(knex) {
     knex.schema.dropTable('palettes')
   ])
 };
+

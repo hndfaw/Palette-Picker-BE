@@ -2,7 +2,7 @@ module.exports = {
 
   development: {
     client: 'pg',
-    connection: 'postgress://localhost/palettes',
+    connection: 'postgres://localhost/palettes',
     migrations: {
       directory: './db/migrations'
     },
