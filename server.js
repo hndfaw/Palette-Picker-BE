@@ -1,9 +1,5 @@
-const environment = process.env.NODE_ENV || 'development';
-const configuration = require('./knexfile')[environment];
-const database = require('knex')(configuration);
+const app = require('./app')
 
-const express = require('express');
-const app = express();
 
 app.set('port', process.env.PORT || 3001)
 
@@ -12,5 +8,7 @@ app.get('/', (req, res) => {
 })
 
 app.listen(app.get('port'), () => {
-  console.log(`Listening on localhost://${app.get('port')} `)
-})
+  console.log(`${app.locals.title} is running on localhost:${app.get('port')}.`);
+});
+
+module.exports = app;
