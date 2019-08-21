@@ -13,7 +13,7 @@ describe('API', () => {
   })
 
 
-  describe('GET /projects', () => {
+  describe('GET all projects', () => {
     it('should return a 200 and all of the projects', async () => {
 
         const expectedProjects = await database('projects').select();
@@ -33,7 +33,7 @@ describe('API', () => {
     })
   })
 
-  describe('Get one project', () => {
+  describe('GET one project', () => {
     it('should return a 200 and one student', async () => {
 
       const expectedProject = await database('projects').first();
@@ -57,7 +57,7 @@ describe('API', () => {
     })
   })
 
-  describe('Get palletes', () => {
+  describe('GET all palletes', () => {
     it('should return a 200 status code and all palettes', async () => {
       const project = await database('projects').first();
       const id = project.id;
@@ -97,5 +97,33 @@ describe('API', () => {
       expect(response.body.error).toEqual(`Cannot find palettes under project with id ${id}`)
     })
   })
+
+  describe('GET one palette', () => {
+    it('should return 200 status code and one palette', async () => {
+
+      const expectedPalette = await database('palettes').first();
+      const id = expectedPalette.id;
+
+      const response = await request(app).get(`/app/v1/projects/palettes/${id}`)
+      const palette = response.body[0];
+
+      expect(response.status).toBe(200);
+      expect(palette.name).toEqual(expectedPalette.name);
+    })
+
+    it('should return 404 and message cannot find palette with id', async () => {
+      const invalidId = -1;
+  
+      const response = await request(app).get(`/app/v1/projects/palettes/${invalidId}`)
+  
+      expect(response.status).toBe(404);
+      expect(response.body.error).toEqual(`Cannot find palette with id ${invalidId}`)
+    })
+  })
+
+  // describe('POST a project', async () => {
+
+  // })
+
   
 })

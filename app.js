@@ -70,8 +70,15 @@ app.get('/app/v1/projects/:id/palettes', (req, res) => {
 app.get('/app/v1/projects/palettes/:id', (req, res) => {
   const {id} = req.params;
   database('palettes').where('id', id).select()
-  .then(palette =>
+  .then(palette => {
+    if(palette.length) {
       res.status(200).json(palette)
+    } else {
+      res.status(404).json({error: `Cannot find palette with id ${id}`})
+    }
+  })
+  .catch(error => 
+      res.status(500).json({error})
     )
 })
 
