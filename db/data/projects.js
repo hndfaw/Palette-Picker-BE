@@ -32,5 +32,9 @@ module.exports = [
         color_5: '#1f8242',
       }
     ]
+  },
+  {
+    name: 'Seed Project 3',
+    palettes: []
   }
 ];
