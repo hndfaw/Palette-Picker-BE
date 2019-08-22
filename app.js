@@ -82,6 +82,15 @@ app.get('/app/v1/projects/palettes/:id', (req, res) => {
     )
 })
 
+app.post('/app/v1/projects', (req, res) => {
+  const newProject = req.body
+
+  database('projects').insert(newProject, 'id')
+    .then(id => 
+        res.status(201).json({ id: id[0]})
+      )
+})
+
 
 
 
