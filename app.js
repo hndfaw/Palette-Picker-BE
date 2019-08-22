@@ -117,6 +117,9 @@ app.post('/app/v1/projects/:id', (req, res) => {
       )
 })
 
+app.delete('/app/v1/projects/:id', (req, res) => {
+  
+})
 
 
 

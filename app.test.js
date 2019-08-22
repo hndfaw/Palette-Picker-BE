@@ -184,5 +184,19 @@ describe('API', () => {
     })
   })
 
+  describe('Delete project', () => {
+    it('should return status code of 204 with the id of deleted project', async () => {
+      const expectedProject = database('projects').first();
+      const id = expectedProject.id;
+
+      const response = request(app).delete(`/app/v1/projects/${id}`);
+
+      const project = response.body[0];
+
+      expect(response.status).toBe(204);
+      expect(project.id).toEqual(id);
+    })
+  })
+
   
 })
