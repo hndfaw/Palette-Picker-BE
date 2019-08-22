@@ -142,20 +142,28 @@ database('palettes').where({
 app.delete('/api/v1/projects/palettes/:id', (req, res) => {
   const {id} = req.params;
 
-    database('palettes').where({
-      id
-    }).del()
+  database('palettes')
+    .where({id})
+    .del()
     .then(() => 
       res.status(201).json({id})
     )
     .catch(error => 
       res.status(422).json({ error })
   )
-
 });
 
+app.patch('/api/v1/projects/:id', (req, res) => {
+  const { id } = req.params;
+  const updatedProject = req.body;
 
-
+  database('projects')
+    .where({ id })
+    .update({ ...updatedProject })
+    .then(() => 
+      res.status(201).json({ ...updatedProject })
+    )
+})
 
 
 module.exports = app
