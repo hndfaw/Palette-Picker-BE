@@ -4,7 +4,8 @@
   "description": "Basic server-side testing in express using mocha and chai",
   "main": "server.js",
   "scripts": {
-    "test": "jest --watchAll",
+    "test": "jest --forceExit",
+    "test:watch": "jest --watchAll",
     "start": "nodemon server.js"
   },
   "author": "Robbie Jaeger",
