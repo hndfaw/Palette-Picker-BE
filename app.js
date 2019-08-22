@@ -142,14 +142,14 @@ database('palettes').where({
 app.delete('/api/v1/projects/palettes/:id', (req, res) => {
   const {id} = req.params;
 
-  database('palettes').where({
-     id
-  }).del()
-  .then(() => 
-     res.status(201).json({id})
-  )
-  .catch(error => 
-    res.status(422).json({ error })
+    database('palettes').where({
+      id
+    }).del()
+    .then(() => 
+      res.status(201).json({id})
+    )
+    .catch(error => 
+      res.status(422).json({ error })
   )
 
 });
