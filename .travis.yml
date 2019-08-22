@@ -5,5 +5,7 @@ services:
   - postgresql
 before_script:
   - psql -c 'CREATE DATABASE palettes_travis_test;' -U postgres
+  - knex migrate:latest --env=test
+  - knex seed:run --env=test
 notification:
-  email: false
+  - email: false
