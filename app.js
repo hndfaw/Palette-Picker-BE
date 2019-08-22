@@ -144,15 +144,18 @@ app.delete('/api/v1/projects/palettes/:id', (req, res) => {
 
   database('palettes').where({
      id
-  }).del()
-  .then(() => 
-     res.status(201).json({id})
-  )
-  .catch(error => 
-    res.status(422).json({ error })
-  )
+    }).del()
+    .then(() => 
+      res.status(201).json({id})
+    )
+    .catch(error => 
+      res.status(422).json({ error })
+    )
 
 });
+
+
+
 
 
 
