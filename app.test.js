@@ -116,8 +116,8 @@ describe('API', () => {
   })
 
   describe('POST a project',  () => {
-    it('should post new projects and return status code 201 witht he id of new item', async () => {
-      const newProject = {name: 'Testing project'};
+    it('should post new projects and return status code 201 with he id of new item', async () => {
+      const newProject = {name: 'Project test 2'};
 
       const response = await request(app).post('/app/v1/projects').send(newProject)
 
@@ -127,6 +127,15 @@ describe('API', () => {
 
       expect(response.status).toBe(201);
       expect(project[0].name).toEqual(newProject.name);
+    })
+
+    it('should send status code 422 with message: Expected format: { name: <String> }. You\'re missing a name property.', async () => {
+      const newProject = {};
+
+      const response = await request(app).post('/app/v1/projects').send(newProject)
+
+      expect(response.status).toBe(422);
+      expect(response.body.error).toEqual('Expected format: { name: <String> }. You\'re missing a name property.');
     })
   })
 

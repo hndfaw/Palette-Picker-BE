@@ -85,9 +85,16 @@ app.get('/app/v1/projects/palettes/:id', (req, res) => {
 app.post('/app/v1/projects', (req, res) => {
   const newProject = req.body
 
+    if (!newProject.name) {
+      return res.status(422).json({ error: `Expected format: { name: <String> }. You're missing a name property.` });
+    }
+
   database('projects').insert(newProject, 'id')
-    .then(id => 
+    .then(id =>
         res.status(201).json({ id: id[0]})
+      )
+    .catch(error =>
+        res.status(500).json({error})
       )
 })
 
