@@ -185,7 +185,7 @@ describe('API', () => {
   })
 
   describe('Delete project', () => {
-    it('should return status code of 204 with the id of deleted project', async () => {
+    it('should return status code of 201 with the id of deleted project', async () => {
       const expectedProject = await database('projects').first();
       const id = expectedProject.id;
 
@@ -197,5 +197,17 @@ describe('API', () => {
     })  
   })
 
-  
+  describe('Delete palette', () => {
+    it('should return status code of 201 with the id of deleted project', async () => {
+      const expectedPalette = await database('projects').first();
+      const id = expectedPalette.id;
+
+      const res = await request(app).delete(`/api/v1/projects/palettes/${id}`);
+      const projectId = parseInt(res.body.id);
+
+      expect(res.status).toBe(201);
+      expect(projectId).toEqual(id);
+    })  
+  })
+
 })

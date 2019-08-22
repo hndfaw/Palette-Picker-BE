@@ -121,16 +121,6 @@ app.post('/api/v1/projects/:id', (req, res) => {
 })
 
 
-
-// app.delete('/api/v1/projects/:id', (req, res) => {
-//   const {id} = req.params;
-
-//   database('projects').where({ id }).del()
-//   .then(() => 
-//     res.status(20).json({id})
-//   )
-// });
-
 app.delete('/api/v1/projects/:id', (req, res) => {
   const {id} = req.params;
 database('palettes').where({
@@ -147,6 +137,21 @@ database('palettes').where({
     res.status(422).json({ error })
   )
 )
+});
+
+app.delete('/api/v1/projects/palettes/:id', (req, res) => {
+  const {id} = req.params;
+
+  database('palettes').where({
+     id
+  }).del()
+  .then(() => 
+     res.status(201).json({id})
+  )
+  .catch(error => 
+    res.status(422).json({ error })
+  )
+
 });
 
 
