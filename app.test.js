@@ -139,5 +139,50 @@ describe('API', () => {
     })
   })
 
+  describe('POST a palette',  () => {
+    it('should post new projects and return status code 201 with he id of new item', async () => {
+
+      const project = await database('projects').first();
+      const id = project.id
+
+      const newPalette = {
+        name: 'Project test 2',
+        color_1: '#fffff',
+        color_2: '#fffff',
+        color_3: '#fffff',
+        color_4: '#fffff',
+        color_5: '#fffff'
+      };
+
+      const response = await request(app).post(`/app/v1/projects/${id}`).send(newPalette)
+      const paletteId = response.body.id
+
+      const palette = await database('palettes').where('id', paletteId).select();
+
+      expect(response.status).toBe(201);
+      expect(palette[0].name).toEqual(newPalette.name);
+      expect(palette[0].color_3).toEqual(newPalette.color_3);
+    })
+
+    it('should send status code 422 with message mentiong missing parameters', async () => {
+      const project = await database('projects').first();
+      const id = project.id
+
+      const newPalette = {};
+
+      let setRequiredParameter
+      for (let requiredParameter of ['color_5', 'color_4', 'color_3', 'color_2', 'color_1', 'name']) {
+        if (!newPalette[requiredParameter]) {
+          setRequiredParameter = requiredParameter
+        }
+      }
+
+      const response = await request(app).post(`/app/v1/projects/${id}`).send(newPalette)
+
+      expect(response.status).toBe(422);
+      expect(response.body.error).toEqual(`Expected format: { name: <String>, color_1: <String>, color_2: <String>, color_3: <String>, color_4: <String>, color_5: <String> }. You\'re missing a "${setRequiredParameter}" property.`);
+    })
+  })
+
   
 })

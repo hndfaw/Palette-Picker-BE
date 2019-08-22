@@ -98,6 +98,25 @@ app.post('/app/v1/projects', (req, res) => {
       )
 })
 
+app.post('/app/v1/projects/:id', (req, res) => {
+  const newPalette = req.body;
+  const { id } = req.params;
+
+  for (let requiredParameter of ['name', 'color_1', 'color_2', 'color_3', 'color_4', 'color_5']) {
+    if (!newPalette[requiredParameter]) {
+      return res.status(422).json({ error: `Expected format: { name: <String>, color_1: <String>, color_2: <String>, color_3: <String>, color_4: <String>, color_5: <String> }. You're missing a "${requiredParameter}" property.` });
+    }
+  }
+
+  database('palettes').insert({project_id: id , ...newPalette}, 'id')
+    .then(id =>
+        res.status(201).json({ id: id[0]})
+      )
+    .catch(error =>
+        res.status(500).json({error})
+      )
+})
+
 
 
 
