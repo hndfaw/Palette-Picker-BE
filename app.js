@@ -5,16 +5,19 @@ const database = require('knex')(configuration)
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
+const cors = require('cors');
 
 app.locals.title = 'Palette Picker'
 
-app.use(bodyParser.json())
+app.use(bodyParser.json());
+app.use(cors());
+
 
 app.get('/', (request, response) => {
   response.send('Palette Picker App!');
 });
 
-app.get('/app/v1/projects', (req, res) => {
+app.get('/api/v1/projects', (req, res) => {
   database('projects').select()
     .then(projects => {
       if(projects.length) {
@@ -28,7 +31,7 @@ app.get('/app/v1/projects', (req, res) => {
     )
 })
 
-app.get('/app/v1/projects/:id', (req, res) => {
+app.get('/api/v1/projects/:id', (req, res) => {
   const { id } = req.params;
   database('projects').where('id', id).select()
     .then(project => {
@@ -43,7 +46,7 @@ app.get('/app/v1/projects/:id', (req, res) => {
     )
 })
 
-app.get('/app/v1/projects/:id/palettes', (req, res) => {
+app.get('/api/v1/projects/:id/palettes', (req, res) => {
   const { id } = req.params;
   database('projects').where('id', id).select()
   .then(project => {
@@ -67,7 +70,7 @@ app.get('/app/v1/projects/:id/palettes', (req, res) => {
   })
 })
 
-app.get('/app/v1/projects/palettes/:id', (req, res) => {
+app.get('/api/v1/projects/palettes/:id', (req, res) => {
   const {id} = req.params;
   database('palettes').where('id', id).select()
   .then(palette => {
@@ -82,7 +85,7 @@ app.get('/app/v1/projects/palettes/:id', (req, res) => {
     )
 })
 
-app.post('/app/v1/projects', (req, res) => {
+app.post('/api/v1/projects', (req, res) => {
   const newProject = req.body
 
     if (!newProject.name) {
@@ -98,7 +101,7 @@ app.post('/app/v1/projects', (req, res) => {
       )
 })
 
-app.post('/app/v1/projects/:id', (req, res) => {
+app.post('/api/v1/projects/:id', (req, res) => {
   const newPalette = req.body;
   const { id } = req.params;
 
@@ -117,9 +120,35 @@ app.post('/app/v1/projects/:id', (req, res) => {
       )
 })
 
-app.delete('/app/v1/projects/:id', (req, res) => {
-  
-})
+
+
+// app.delete('/api/v1/projects/:id', (req, res) => {
+//   const {id} = req.params;
+
+//   database('projects').where({ id }).del()
+//   .then(() => 
+//     res.status(20).json({id})
+//   )
+// });
+
+app.delete('/api/v1/projects/:id', (req, res) => {
+  const {id} = req.params;
+database('palettes').where({
+  project_id: id
+}).del()
+.then(()=>
+  database('projects').where({
+     id
+  }).del()
+  .then(() => 
+     res.status(201).json({id})
+  )
+  .catch(error => 
+    res.status(422).json({ error })
+  )
+)
+});
+
 
 
 

@@ -18,7 +18,7 @@ describe('API', () => {
 
         const expectedProjects = await database('projects').select();
 
-        const response = await request(app).get('/app/v1/projects');
+        const response = await request(app).get('/api/v1/projects');
         const projects = response.body;
     
         expect(response.status).toBe(200);
@@ -33,7 +33,7 @@ describe('API', () => {
       const expectedProject = await database('projects').first();
       const id = expectedProject.id
 
-      const response = await request(app).get(`/app/v1/projects/${id}`);
+      const response = await request(app).get(`/api/v1/projects/${id}`);
       const project = response.body[0];
 
       expect(response.status).toBe(200);
@@ -44,7 +44,7 @@ describe('API', () => {
     it('should return a 404 status code and a messge project not found', async () => {
       const invalidId = -1;
 
-      const response = await request(app).get(`/app/v1/projects/${invalidId}`);
+      const response = await request(app).get(`/api/v1/projects/${invalidId}`);
 
       expect(response.status).toBe(404);
       expect(response.body.error).toEqual(`Cannot find project with id ${invalidId}`)
@@ -58,7 +58,7 @@ describe('API', () => {
 
       const expectedPalettes = await database('palettes').where('project_id', id).select();
 
-      const response = await request(app).get(`/app/v1/projects/${id}/palettes`);
+      const response = await request(app).get(`/api/v1/projects/${id}/palettes`);
       const palettes = response.body;
 
       
@@ -75,7 +75,7 @@ describe('API', () => {
     it('should return status code 404 and message Cannot find project with id if the project was not exist', async () => {
       const invalidId = -1;
 
-      const response = await request(app).get(`/app/v1/projects/${invalidId}/palettes`);
+      const response = await request(app).get(`/api/v1/projects/${invalidId}/palettes`);
 
       expect(response.status).toBe(404);
       expect(response.body.error).toEqual(`Cannot find project with id ${invalidId}`)
@@ -85,7 +85,7 @@ describe('API', () => {
       const project = await database('projects').where('name', 'Seed Project 3').select();
       const id = project[0].id;
       
-      const response = await request(app).get(`/app/v1/projects/${id}/palettes`);
+      const response = await request(app).get(`/api/v1/projects/${id}/palettes`);
 
       expect(response.status).toBe(404);
       expect(response.body.error).toEqual(`Cannot find palettes under project with id ${id}`)
@@ -98,7 +98,7 @@ describe('API', () => {
       const expectedPalette = await database('palettes').first();
       const id = expectedPalette.id;
 
-      const response = await request(app).get(`/app/v1/projects/palettes/${id}`)
+      const response = await request(app).get(`/api/v1/projects/palettes/${id}`)
       const palette = response.body[0];
 
       expect(response.status).toBe(200);
@@ -108,7 +108,7 @@ describe('API', () => {
     it('should return 404 and message cannot find palette with id', async () => {
       const invalidId = -1;
   
-      const response = await request(app).get(`/app/v1/projects/palettes/${invalidId}`)
+      const response = await request(app).get(`/api/v1/projects/palettes/${invalidId}`)
   
       expect(response.status).toBe(404);
       expect(response.body.error).toEqual(`Cannot find palette with id ${invalidId}`)
@@ -119,7 +119,7 @@ describe('API', () => {
     it('should post new projects and return status code 201 with he id of new item', async () => {
       const newProject = {name: 'Project test 2'};
 
-      const response = await request(app).post('/app/v1/projects').send(newProject)
+      const response = await request(app).post('/api/v1/projects').send(newProject)
 
       const id = response.body.id
 
@@ -132,7 +132,7 @@ describe('API', () => {
     it('should send status code 422 with message: Expected format: { name: <String> }. You\'re missing a name property.', async () => {
       const newProject = {};
 
-      const response = await request(app).post('/app/v1/projects').send(newProject)
+      const response = await request(app).post('/api/v1/projects').send(newProject)
 
       expect(response.status).toBe(422);
       expect(response.body.error).toEqual('Expected format: { name: <String> }. You\'re missing a name property.');
@@ -154,7 +154,7 @@ describe('API', () => {
         color_5: '#fffff'
       };
 
-      const response = await request(app).post(`/app/v1/projects/${id}`).send(newPalette)
+      const response = await request(app).post(`/api/v1/projects/${id}`).send(newPalette)
       const paletteId = response.body.id
 
       const palette = await database('palettes').where('id', paletteId).select();
@@ -177,25 +177,24 @@ describe('API', () => {
         }
       }
 
-      const response = await request(app).post(`/app/v1/projects/${id}`).send(newPalette)
+      const response = await request(app).post(`/api/v1/projects/${id}`).send(newPalette)
 
       expect(response.status).toBe(422);
       expect(response.body.error).toEqual(`Expected format: { name: <String>, color_1: <String>, color_2: <String>, color_3: <String>, color_4: <String>, color_5: <String> }. You\'re missing a "${setRequiredParameter}" property.`);
     })
   })
 
-  describe.skip('Delete project', () => {
+  describe('Delete project', () => {
     it('should return status code of 204 with the id of deleted project', async () => {
-      const expectedProject = database('projects').first();
+      const expectedProject = await database('projects').first();
       const id = expectedProject.id;
 
-      const response = request(app).delete(`/app/v1/projects/${id}`);
+      const res = await request(app).delete(`/api/v1/projects/${id}`);
+      const projectId = parseInt(res.body.id);
 
-      const project = response.body[0];
-
-      expect(response.status).toBe(204);
-      expect(project.id).toEqual(id);
-    })
+      expect(res.status).toBe(201);
+      expect(projectId).toEqual(id);
+    })  
   })
 
   
