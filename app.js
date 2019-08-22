@@ -157,8 +157,4 @@ app.delete('/api/v1/projects/palettes/:id', (req, res) => {
 
 
 
-
-
-
-
 module.exports = app
