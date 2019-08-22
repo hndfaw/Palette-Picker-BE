@@ -1,3 +1,9 @@
 language: node_js
 node_js:
-  - 12.7.0
+  - "node"
+services:
+  - postgresql
+before_script:
+  - psql -c 'CREATE DATABASE palettes_travis_test;' -U postgres
+notification:
+  email: false
