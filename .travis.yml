@@ -13,8 +13,8 @@ deploy:
   provider: heroku
   api_key:
     secure: kUCWUvriQnnxCMbpQgr12Y+9h+ueLSaSPSba+58cgtOD9M0mKyOd5wM5G14bHbClu1VqXA+5c1ww5wV9EzRPS9YdIAj4HXBWgjGyChRrJZPPKYV6lNP8X4ISfMU3u9h5PX6G6I1Mo04uUpzFjKsdQ5vgHKxa0kpGttJhYtKfm5CROmwCjhqCfpS/GY7OHxBaqRK1DcCg2tDP7miCtuuQmClAN/JBHHY25nHVLswKOaJiMI2H5kgonrL1iLw3nHv+JSie9zo5Jb1QmX9i/VDM5LgkZpteKBKgJ2Dj2S+mFt+QWgGkfua4Z4kMvxgkYbVV6fiVopPEC8vSsQ/St+m0UJxu5hjTg8uRweUZg4GJdqHBQh7wKFjkRk70G1DCGjSvoV3TOUCNotaXAytM3AGRpjGmQmcvcfcAlovdmrB2pTHKlLNJ/ACu1PSx/SvMg8tW2MldcpK5t5HcRWaReKsUcIFkil3Ly+1Hur+dXSF2pwX+jWaI2XMs5S46ZT/pZpY2ISADXGejuNJQCd1m1PR3Gb7YwLdYkG1uuxLE09LGNXqu3qXM2UUCR9rtWlYfXbeORilEl9zr1QIHcMUOnqfA0QGiPnsHCi+nO2iXlcSMku7Yk61anUOUDNgSKRWKxYE+rqLcwSCkacTpiZ2cwXUy+RF1ZfMHRjSrozDtspVoVyU=
-  app: palette-picker-backend
-    master: my-app-staging
+  app: 
+    master: palette-picker-backend
     production: my-app-production
 
   on:
