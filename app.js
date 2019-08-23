@@ -142,17 +142,61 @@ database('palettes').where({
 app.delete('/api/v1/projects/palettes/:id', (req, res) => {
   const {id} = req.params;
 
-  database('palettes').where({
-     id
-    }).del()
+  database('palettes')
+    .where({id})
+    .del()
     .then(() => 
       res.status(201).json({id})
     )
     .catch(error => 
       res.status(422).json({ error })
-    )
-
+  )
 });
+
+app.patch('/api/v1/projects/:id', (req, res) => {
+  const { id } = req.params;
+  const updatedProject = req.body;
+
+  if(!updatedProject) {
+    return res.status(422).json({error: `Cannot found project with id ${id}`})
+  }
+
+  database('projects')
+    .where({ id })
+    .update({ ...updatedProject })
+    .then(() => 
+      res.status(201).json({ ...updatedProject })
+    )
+    .catch(error => 
+      res.status(424).json({ error })
+  )
+})
+
+app.patch('/api/v1/projects/palettes/:id', (req, res) => {
+  const { id } = req.params;
+  const updatedPalette = req.body;
+
+  if(!updatedPalette) {
+    return res.status(422).json({error: `Cannot found palette with id ${id}`})
+  }
+
+  database('palettes')
+    .where({ id })
+    .update({
+      name: updatedPalette.name,
+      color_1: updatedPalette.color_1,
+      color_2: updatedPalette.color_2,
+      color_3: updatedPalette.color_3,
+      color_4: updatedPalette.color_4,
+      color_5: updatedPalette.color_5,
+     })
+    .then(() => 
+      res.status(201).json({ ...updatedPalette })
+    )
+    .catch(error => 
+      res.status(422).json({ error })
+  )
+})
 
 
 
