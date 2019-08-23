@@ -198,7 +198,7 @@ describe('API', () => {
   })
 
   describe('Delete palette', () => {
-    it('should return status code of 201 with the id of deleted project', async () => {
+    it('should return status code of 201 with the id of deleted palette', async () => {
       const expectedPalette = await database('projects').first();
       const id = expectedPalette.id;
 
@@ -208,6 +208,55 @@ describe('API', () => {
       expect(res.status).toBe(201);
       expect(projectId).toEqual(id);
     })  
+  })
+
+  describe('PATCH project', () => {
+    it('should return status code of 201 with the id of updated project', async () => {
+      const expectedProject = await database('projects').first();
+      const id = expectedProject.id;
+
+      const updatedProject = {
+        name: 'new name'
+      }
+
+      const res = await request(app).patch(`/api/v1/projects/${id}`).send({...updatedProject})
+
+      const project = await database('projects').where({ id }).select();
+
+      expect(res.status).toBe(201);
+      expect(project[0].name).toEqual('new name');
+    })
+
+    // it('should return status code of 422 with message Cannot found project with id', async () => {
+
+    //   const invalidId = -1;
+
+    //   const updatedProject = false
+
+    //   const res = await request(app).patch(`/api/v1/projects/${invalidId}`).send({...updatedProject})
+
+    //   console.log(res.status)
+    //   expect(res.status).toBe(201);
+    //   // expect(project[0].name).toEqual('new name');
+    // })
+  })
+
+  describe('PATCH palettes', () => {
+    it('should return status code of 201 with the id of updated palette', async () => {
+      const expectedPalette = await database('palettes').first();
+      const id = expectedPalette.id;
+
+      const updatedPalette = {
+        name: 'new name of palette'
+      }
+
+      const res = await request(app).patch(`/api/v1/projects/palettes/${id}`).send({...updatedPalette})
+
+      const palette = await database('palettes').where({ id }).select();
+
+      expect(res.status).toBe(201);
+      expect(palette[0].name).toEqual('new name of palette');
+    })
   })
 
 })

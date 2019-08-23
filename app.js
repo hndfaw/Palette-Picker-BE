@@ -168,7 +168,7 @@ app.patch('/api/v1/projects/:id', (req, res) => {
       res.status(201).json({ ...updatedProject })
     )
     .catch(error => 
-      res.status(422).json({ error })
+      res.status(424).json({ error })
   )
 })
 
