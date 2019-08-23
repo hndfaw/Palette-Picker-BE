@@ -8,7 +8,7 @@ before_script:
 - knex migrate:latest --env=test
 - knex seed:run --env=test
 notification:
-- email: false
+  email: false
 deploy:
   provider: heroku
   api_key:
