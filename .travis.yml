@@ -8,7 +8,7 @@ before_script:
 - knex migrate:latest --env=test
 - knex seed:run --env=test
 notification:
-  email: false
+ email: false
 deploy:
   provider: heroku
   api_key:
@@ -16,8 +16,4 @@ deploy:
   app: palette-picker-backend
   on:
     repo: hndfaw/Palette-Picker-BE
-    branches:
-      only:      
-        - master 
-app: palette-picker-backend
 skip_cleanup: true
