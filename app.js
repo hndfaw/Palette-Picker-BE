@@ -21,7 +21,7 @@ app.get('/api/v1/projects', (req, res) => {
   database('projects').select()
     .then(projects => {
       if(projects.length) {
-        res.status(200).json(projects)
+        res.status(200).json({projects, ok: true})
       } else {
         res.status(404).json('Cannot find projects')
       }
@@ -60,7 +60,7 @@ app.get('/api/v1/projects/:id/palettes', (req, res) => {
         if(palettes.length) {
           res.status(200).json(palettes)
         } else {
-          res.status(404).json({error: `Cannot find palettes under project with id ${id}`})
+          res.status(404).json([{error: `Cannot find palettes under this project`}])
         }
       })
       .catch(error =>
