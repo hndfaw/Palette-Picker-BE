@@ -1,18 +1,18 @@
 language: node_js
 node_js:
-  - node
+- node
 services:
-  - postgresql
+- postgresql
 before_script:
-  - psql -c 'CREATE DATABASE palettes_test;' -U postgres
-  - knex migrate:latest --env=test
-  - knex seed:run --env=test
+- psql -c 'CREATE DATABASE palettes_test;' -U postgres
+- knex migrate:latest --env=test
+- knex seed:run --env=test
 notification:
- email: false
+  email: false
 deploy:
   provider: heroku
   api_key:
-    secure: kUCWUvriQnnxCMbpQgr12Y+9h+ueLSaSPSba+58cgtOD9M0mKyOd5wM5G14bHbClu1VqXA+5c1ww5wV9EzRPS9YdIAj4HXBWgjGyChRrJZPPKYV6lNP8X4ISfMU3u9h5PX6G6I1Mo04uUpzFjKsdQ5vgHKxa0kpGttJhYtKfm5CROmwCjhqCfpS/GY7OHxBaqRK1DcCg2tDP7miCtuuQmClAN/JBHHY25nHVLswKOaJiMI2H5kgonrL1iLw3nHv+JSie9zo5Jb1QmX9i/VDM5LgkZpteKBKgJ2Dj2S+mFt+QWgGkfua4Z4kMvxgkYbVV6fiVopPEC8vSsQ/St+m0UJxu5hjTg8uRweUZg4GJdqHBQh7wKFjkRk70G1DCGjSvoV3TOUCNotaXAytM3AGRpjGmQmcvcfcAlovdmrB2pTHKlLNJ/ACu1PSx/SvMg8tW2MldcpK5t5HcRWaReKsUcIFkil3Ly+1Hur+dXSF2pwX+jWaI2XMs5S46ZT/pZpY2ISADXGejuNJQCd1m1PR3Gb7YwLdYkG1uuxLE09LGNXqu3qXM2UUCR9rtWlYfXbeORilEl9zr1QIHcMUOnqfA0QGiPnsHCi+nO2iXlcSMku7Yk61anUOUDNgSKRWKxYE+rqLcwSCkacTpiZ2cwXUy+RF1ZfMHRjSrozDtspVoVyU=
+    secure: tAUGYRzIdTuBVHWGQm8JhDb3SeigpBW1v2XFElvc/CTp3etHIMw/TTbjYhxQAGUFFy1eEKsJHl8KuVRD5oG10ClkG46VOpZ8YHzECfcfnOf9b2sCgdQ3fSp5v91nGrCEHT4qGP0dNFp1FncuC4300n3e5WswHwBOf3NX+eHJWwd5hPof0AEYUr4KJD8S/500X4zuZEDh1X6y2U8QDHSeXZzZs0YRpOhNDg38n9KnoQNham0jw4Uy4zgkQU4ucnFtuEdNP/l+r2a33FPb1ohX/n9zhMx2nsYv8homeJHH+HQeC7GHDCj91kFv4cqbr1KGeWiqHUaOlYkG5yefQV9oudr5hnJ8h32Phzydx9CcZc+q7vVig62r25MWL7j0rGvDJXPbJ3P4h1hjqXsvrtTFKi5MxIs2TlOlg9LOikMDlNhghF4NQi/kc5u+G1pU1sEPiYxlCV78WwbLY34dxoG3m+7ppxMsr8siIodtt7KgoB0Xs7cEZezD0WzyJZRCWkgQUDuRJjClcvYRmtMwx0JNxIrk6mC6IEDQ9lfCZGgY7vMdCk1DgEDtri6cdW459oxAWcdTezV1xtQLrMneswm70UU/bHMzKNq7imQctAYK0zZLoYfom2picOzC1v76mjd826FFTmNeXPaSNMJrGAkB5yJ1YdCNzYcGqes7d8yO/B8=
   app: palette-picker-backend
   on:
     repo: hndfaw/Palette-Picker-BE
