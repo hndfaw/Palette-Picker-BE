@@ -14,7 +14,7 @@ describe('API', () => {
 
 
   describe('GET all projects', () => {
-    it.skip('should return a 200 and all of the projects', async () => {
+    it('should return a 200 and all of the projects', async () => {
 
         const expectedProjects = await database('projects').select();
 
