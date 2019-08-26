@@ -14,27 +14,27 @@ describe('API', () => {
 
 
   describe('GET all projects', () => {
-    it.skip('should return a 200 and all of the projects', async () => {
+    it('should return a 200 and all of the projects', async () => {
 
         const expectedProjects = await database('projects').select();
 
         const response = await request(app).get('/api/v1/projects');
         const projects = response.body;
-    
+
         expect(response.status).toBe(200);
-        expect(projects[0].name).toEqual(expectedProjects[0].name)
+        expect(projects.projects[0].name).toEqual(expectedProjects[0].name)
 
     })
   })
 
   describe('GET one project', () => {
-    it.skip('should return a 200 and one student', async () => {
+    it('should return a 200 and one project', async () => {
 
       const expectedProject = await database('projects').first();
       const id = expectedProject.id
 
       const response = await request(app).get(`/api/v1/projects/${id}`);
-      const project = response.body[0];
+      const project = response.body.project[0];
 
       expect(response.status).toBe(200);
       expect(project.name).toEqual(expectedProject.name);
@@ -52,15 +52,14 @@ describe('API', () => {
   })
 
   describe('GET all palletes', () => {
-    it.skip('should return a 200 status code and all palettes of one project', async () => {
+    it('should return a 200 status code and all palettes of one project', async () => {
       const project = await database('projects').first();
       const id = project.id;
 
       const expectedPalettes = await database('palettes').where('project_id', id).select();
 
       const response = await request(app).get(`/api/v1/projects/${id}/palettes`);
-      const palettes = response.body;
-
+      const palettes = response.body.palettes;
       
        if (!palettes.error) {
          expect(response.status).toBe(200);
@@ -81,14 +80,14 @@ describe('API', () => {
       expect(response.body.error).toEqual(`Cannot find project with id ${invalidId}`)
     })
 
-    it.skip('should return status code 404 and message Cannot find palettes if there were no palettes', async () => {
+    it('should return status code 404 and message Cannot find palettes if there were no palettes', async () => {
       const project = await database('projects').where('name', 'Seed Project 3').select();
       const id = project[0].id;
       
       const response = await request(app).get(`/api/v1/projects/${id}/palettes`);
-
+      console.log(response.body.palettes)
       expect(response.status).toBe(404);
-      expect(response.body.error).toEqual(`Cannot find palettes under project with id ${id}`)
+      expect(response.body.palettes).toEqual(`Cannot find palettes under this project`)
     })
   })
 
