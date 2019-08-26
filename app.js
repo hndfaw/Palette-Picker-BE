@@ -23,7 +23,7 @@ app.get('/api/v1/projects', (req, res) => {
       if(projects.length) {
         res.status(200).json({projects, ok: true})
       } else {
-        res.status(404).json('Cannot find projects')
+        res.status(404).json({error: 'Cannot find projects', ok: false})
       }
     })
   .catch(error =>
@@ -36,9 +36,9 @@ app.get('/api/v1/projects/:id', (req, res) => {
   database('projects').where('id', id).select()
     .then(project => {
       if(project.length) {
-        res.status(200).json( project )
+        res.status(200).json( { ok: true, project} )
       } else {
-        res.status(404).json({error: `Cannot find project with id ${id}`})
+        res.status(404).json({ok: false, error: `Cannot find project with id ${id}`})
       }
     })
   .catch(error => 
@@ -58,9 +58,9 @@ app.get('/api/v1/projects/:id/palettes', (req, res) => {
       database('palettes').where('project_id', id).select()
       .then(palettes => {
         if(palettes.length) {
-          res.status(200).json(palettes)
+          res.status(200).json({palettes, ok: true})
         } else {
-          res.status(404).json([{error: `Cannot find palettes under this project`}])
+          res.status(404).json({palettes: `Cannot find palettes under this project`, ok: false})
         }
       })
       .catch(error =>
@@ -94,7 +94,7 @@ app.post('/api/v1/projects', (req, res) => {
 
   database('projects').insert(newProject, 'id')
     .then(id =>
-        res.status(201).json({ id: id[0]})
+        res.status(201).json({ id: id[0], ok: true})
       )
     .catch(error =>
         res.status(500).json({error})
@@ -113,7 +113,7 @@ app.post('/api/v1/projects/:id', (req, res) => {
 
   database('palettes').insert({project_id: id , ...newPalette}, 'id')
     .then(id =>
-        res.status(201).json({ id: id[0]})
+        res.status(201).json({ id: id[0], ok: true})
       )
     .catch(error =>
         res.status(500).json({error})
@@ -131,7 +131,7 @@ database('palettes').where({
      id
   }).del()
   .then(() => 
-     res.status(201).json({id})
+     res.status(201).json({id, ok: true})
   )
   .catch(error => 
     res.status(422).json({ error })
