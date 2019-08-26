@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest --forceExit",
     "test:watch": "jest --watchAll",
-    "start": "nodemon server.js"
+    "start": "server.js"
   },
   "author": "Robbie Jaeger",
   "license": "MIT",
