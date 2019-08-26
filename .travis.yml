@@ -16,5 +16,5 @@ deploy:
   app: palette-picker-backend
   on:
     repo: hndfaw/Palette-Picker-BE
-    branch: production
+    
 skip_cleanup: true
