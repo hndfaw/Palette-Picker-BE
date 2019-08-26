@@ -1,14 +1,14 @@
 language: node_js
 node_js:
-- node
+  - node
 services:
-- postgresql
+  - postgresql
 before_script:
-- psql -c 'CREATE DATABASE palettes_test;' -U postgres
-- knex migrate:latest --env=test
-- knex seed:run --env=test
+  - psql -c 'CREATE DATABASE palettes_test;' -U postgres
+  - knex migrate:latest --env=test
+  - knex seed:run --env=test
 notification:
- email: false
+  email: false
 deploy:
   provider: heroku
   api_key:
