@@ -12,7 +12,6 @@ app.locals.title = 'Palette Picker'
 app.use(bodyParser.json());
 app.use(cors());
 
-
 app.get('/', (request, response) => {
   response.send('Palette Picker App!');
 });
@@ -21,7 +20,7 @@ app.get('/api/v1/projects', (req, res) => {
   database('projects').select()
     .then(projects => {
       if(projects.length) {
-        res.status(200).json(projects)
+        res.status(200).json({projects, ok: true})
       } else {
         res.status(404).json({error: 'Cannot find projects', ok: false})
       }

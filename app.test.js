@@ -20,7 +20,7 @@ describe('API', () => {
 
         const response = await request(app).get('/api/v1/projects');
         const projects = response.body;
-
+      console.log(projects)
         expect(response.status).toBe(200);
         expect(projects.projects[0].name).toEqual(expectedProjects[0].name)
 
