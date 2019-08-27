@@ -21,7 +21,7 @@ app.get('/api/v1/projects', (req, res) => {
   database('projects').select()
     .then(projects => {
       if(projects.length) {
-        res.status(200).json({projects, ok: true})
+        res.status(200).json(projects)
       } else {
         res.status(404).json({error: 'Cannot find projects', ok: false})
       }
