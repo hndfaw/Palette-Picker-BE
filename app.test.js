@@ -226,18 +226,16 @@ describe('API', () => {
       expect(project[0].name).toEqual('new name');
     })
 
-    // it('should return status code of 422 with message Cannot found project with id', async () => {
+    it('should return status code of 424 with message Cannot found project with id', async () => {
 
-    //   const invalidId = -1;
+      const invalidId = -1;
 
-    //   const updatedProject = false
+      const updatedProject = false
 
-    //   const res = await request(app).patch(`/api/v1/projects/${invalidId}`).send({...updatedProject})
+      const res = await request(app).patch(`/api/v1/projects/${invalidId}`).send({...updatedProject})
 
-    //   console.log(res.status)
-    //   expect(res.status).toBe(201);
-    //   // expect(project[0].name).toEqual('new name');
-    // })
+      expect(res.status).toBe(424);
+    })
   })
 
   describe('PATCH palettes', () => {
@@ -256,6 +254,7 @@ describe('API', () => {
       expect(res.status).toBe(201);
       expect(palette[0].name).toEqual('new name of palette');
     })
+
   })
 
 })

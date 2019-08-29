@@ -195,6 +195,7 @@ app.patch('/api/v1/projects/palettes/:id', (req, res) => {
     .catch(error => 
       res.status(422).json({ error })
   )
+  
 })
 
 
